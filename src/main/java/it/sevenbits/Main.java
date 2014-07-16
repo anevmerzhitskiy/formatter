@@ -1,6 +1,7 @@
 package it.sevenbits;
 
 import it.sevenbits.codeformatter.FormatterException;
+import it.sevenbits.streams.StreamException;
 import org.apache.log4j.Logger;
 import org.apache.log4j.Level;
 import it.sevenbits.codeformatter.CodeFormatter;
@@ -19,23 +20,23 @@ final class Main {
 
     public static void main(final String[] args) {
         if (args.length > 1) {
-            FileInStream fis;
-            FileOutStream fos;
+            FileInStream in;
+            FileOutStream out;
             CodeFormatter codeFormatter = new CodeFormatter();
             FormatOptions formatOptions = new FormatOptions();
             try {
-                fis = new FileInStream(args[0]);
-                fos = new FileOutStream(args[1]);
-                codeFormatter.format(fis, fos, formatOptions);
+                in = new FileInStream(args[0]);
+                out = new FileOutStream(args[1]);
+                codeFormatter.format(in, out, formatOptions);
             } catch (FormatterException e) {
                 if (LOGGER.isEnabledFor(Level.ERROR)) {
                     LOGGER.error(e.getMessage());
                 }
-            } catch (FileNotFoundException e) {
+            } catch (StreamException e) {
                 e.printStackTrace();
             }
         } else {
-            LOGGER.error("Parameters: input_file_path output_file_path");
+            LOGGER.error("Stream error");
         }
     }
 }

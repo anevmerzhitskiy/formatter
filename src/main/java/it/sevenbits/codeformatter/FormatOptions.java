@@ -1,17 +1,18 @@
 package it.sevenbits.codeformatter;
 
 /**
- *
+ * set format options
  * Created by anton on 04/07/14.
  */
 public class FormatOptions {
 
+    private static final int INDENT_SIZE = 4;
     private int indentSize;
     private char endOfString;
     private char tabSymbol;
 
     public FormatOptions() {
-        indentSize = 4;
+        indentSize = INDENT_SIZE;
         endOfString = '\n';
         tabSymbol = ' ';
     }

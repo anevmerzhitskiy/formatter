@@ -1,6 +1,7 @@
 package it.sevenbits.streams;
 
 
+import java.io.IOException;
 
 /**
 * input data stream
@@ -16,7 +17,7 @@ public interface InStream {
     /**
      * @throws StreamException
      */
-    void close() throws StreamException;
+    void close() throws StreamException, IOException;
 
     /**
      * @return true, if end of file

@@ -20,13 +20,6 @@ import static org.junit.Assert.assertTrue;
 public class formatTests {
 
     @Test
-    public void twoEqualStrings() {
-        String in = new String("{ abc }");
-        String res = new String("{ abc }");
-        assertTrue(res.equals(in));
-    }
-
-    @Test
     public void lineFeed() throws StreamException, FormatterException {
         InStream in = new StringInStream("a;");
         StringOutStream out = new StringOutStream("");
@@ -50,9 +43,10 @@ public class formatTests {
         assertTrue(res.equals(temp));
     }
 
+    @Test
     public void tabAndLineFeed() throws StreamException, FormatterException, IOException {
         InStream in = new StringInStream("{a;}");
-        String res = new String("{\n    a;\n}");
+        String res = new String("{\n    a;\n}\n");
         StringOutStream out = new StringOutStream();
         CodeFormatter formatter = new CodeFormatter();
         FormatOptions formatOpt = new FormatOptions();
@@ -61,6 +55,7 @@ public class formatTests {
         assertTrue(res.equals(temp));
     }
 
+    /*@Test
     public void deleteSpace() throws StreamException, FormatterException, IOException {
         InStream in = new StringInStream("{  a;}");
         String res = new String("{\n    a;\n}");
@@ -70,5 +65,5 @@ public class formatTests {
         formatter.format(in, out, formatOpt);
         String temp = out.getString();
         assertTrue(res.equals(temp));
-    }
+    }*/
 }

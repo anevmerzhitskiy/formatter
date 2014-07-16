@@ -3,9 +3,7 @@ package it.sevenbits.streams;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.logging.Logger;
 
 /**
  *
@@ -15,19 +13,18 @@ public class FileInStream implements InStream {
     private FileInputStream in;
     private File file;
 
-    public FileInStream(final String fileName) throws FileNotFoundException {
+    public FileInStream(final String fileName) throws StreamException {
         file = new File(fileName);
         try {
             in = new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            Logger LOG = Logger.getLogger(String.valueOf(FileInStream.class));
-            //LOG.fatal("Create stream error");
+        } catch (IOException e) {
+            throw new StreamException(e);
         }
     }
 
     public char getSymbol() throws StreamException {
 
-        char temp = 0;
+        char temp;
         try {
             temp = (char) in.read();
         } catch (IOException e) {
@@ -36,13 +33,15 @@ public class FileInStream implements InStream {
         return temp;
     }
 
-
-    public void close() throws StreamException {
-        //in.close();
+    public void close() throws StreamException, IOException {
+        in.close();
     }
 
-
-    public boolean isEnd() {
-        return true;
+    public boolean isEnd() throws StreamException {
+        try {
+            return in.available() < 1;
+        } catch (IOException e) {
+            throw new StreamException(e);
+        }
     }
 }
